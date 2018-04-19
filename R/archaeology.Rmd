@@ -1,0 +1,128 @@
+---
+title: "Archaeology"
+output: html_notebook
+---
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+library(devtools)
+#install_github("oswaldosantos/ggsn")
+#library(ggsn)
+library(ggthemes)
+library(raster)
+library(rgdal)
+library(sp)
+library(viridis)
+
+```
+
+
+## Set up geodata
+
+```{r}
+epsg <- 4326
+crs <- paste("+init=epsg:",epsg,"", sep="")
+
+cnt <- spTransform(readOGR(dsn = "../data/vector", layer="10m_admin_0_countries", verbose = FALSE), CRS( crs))
+rvr <- spTransform(readOGR(dsn = "../data/vector", layer="10m_rivers_lake_centerlines", verbose = FALSE), CRS(crs))
+
+# raster layer with rainforest cover from bioval.jrc.ec.europa.eu
+dpath <- "../data/raster/bioval.jrc.ec.europa.eu/hdr.adf"
+x <- new("GDALReadOnlyDataset", dpath)
+getDriver(x)
+getDriverLongName(getDriver(x))
+
+hdr <- asSGDF_GROD(x)
+hdr <- raster(hdr)
+
+# extent format (xmin,xmax,ymin,ymax)
+e  <- extent(6, 23, -8.5, 8.5) 
+rfs <- crop(hdr, e) 
+
+# convert the raster to points for plotting
+rfs.p <- rasterToPoints(rfs)
+
+# Make the points a dataframe for ggplot & subset rainforest bands 1-7
+rfs.d <- data.frame(rfs.p)
+rfs.d <- subset(rfs.d, band1 >= 1 & band1 <= 7)
+
+# Create basemap
+g.b <- ggplot() + 
+  geom_polygon(data = cnt, 
+              aes(long, lat, group = group, fill=hole),
+              fill  = "#ffebbe") + 
+  geom_raster(data = rfs.d, aes(y = y, x = x), fill = '#00734d') + 
+  geom_polygon(data = cnt, 
+              aes(long, lat, group = group),
+              size = 0.2, 
+              fill  = NA,  
+              color = "black") + 
+  geom_path(data = rvr, 
+            aes(long, lat, group = group, fill=NULL),
+            size = 0.5,   
+            colour  = "#44afe3") + 
+  #scalebar(location = "bottomright", dist = 250, height = 0.2,
+  #         dd2km = TRUE, model = 'WGS84',           
+  #         x.min = 15, x.max = 22,
+  #         y.min = -6.25, y.max = -5.25, 
+  #         st.dist = .4, st.size = 4) +
+  coord_equal(xlim=c(7, 22),
+              ylim=c(-7.5,7.5)) + 
+  theme_few() + 
+  theme(
+    panel.background = element_rect(fill = "#dff1f9"),
+    plot.background = element_rect(color = NA, 
+                                   fill = NA)
+  )
+
+# the minimap:
+csl <- spTransform(readOGR(dsn = "../data/vector", layer="ne_110m_land", verbose = FALSE), CRS( crs))
+
+g2 <- ggplotGrob(
+  ggplot() + 
+  geom_path(data = csl, 
+               aes(long, lat, group = group),
+               size = 0.2, 
+               fill = 'white', color = "black") + 
+  geom_rect(mapping = aes(xmin = 7, xmax = 22, 
+                          ymin = -7.5, ymax = 7.5), 
+            alpha = 0.5, fill ="black", size = 0.5) + 
+  coord_equal() + 
+  scale_x_continuous(limits = c(-20, 55), expand = c(0, 0)) + 
+  scale_y_continuous(limits = c(-40, 42), expand = c(0, 0)) + 
+  theme_map() + 
+  theme(panel.background = element_rect(fill = 'white'), 
+        panel.border = element_rect(colour  = 'black', fill = NA, size = 1))
+)
+```
+
+
+
+
+```{r}
+d <- read.csv("https://raw.githubusercontent.com/dirkseidensticker/aDRAC/master/data/aDRAC.csv", encoding = "UTF-8")
+# filter rough bounding box
+d <- filter(d, LAT < 10 & LAT > -10 & LONG > 5 & LONG < 22)
+
+
+
+g1 <- g.b + 
+  geom_point(data = d, 
+             aes(x = LONG, 
+                 y = LAT), 
+             shape = 21,
+             size = 3, 
+             fill = "black",
+             color = "white")
+
+g3 <- g1 + 
+  annotation_custom(grob = g2, 
+                    xmin = 6, xmax = 10,
+                    ymin = -8, ymax = -4)
+g3
+ggsave(g3, filename = "../img/FigArch.pdf", 
+       width = 6, height = 6)
+```
+
