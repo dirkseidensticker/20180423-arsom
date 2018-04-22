@@ -4,7 +4,7 @@ output: html_notebook
 ---
 
 ```{r}
-
+library(cowplot)
 library(dplyr)
 library(ggplot2)
 library(devtools)
@@ -12,16 +12,22 @@ library(devtools)
 #library(ggsn)
 library(ggthemes)
 library(raster)
+library(reshape2)
 library(rgdal)
 library(sp)
 library(viridis)
-
 ```
 
 
 ## Set up geodata
 
 ```{r}
+# bounding box
+xmin <- -10
+xmax <- 10
+ymin <- 5
+ymax <- 22
+
 epsg <- 4326
 crs <- paste("+init=epsg:",epsg,"", sep="")
 
@@ -48,6 +54,12 @@ rfs.p <- rasterToPoints(rfs)
 rfs.d <- data.frame(rfs.p)
 rfs.d <- subset(rfs.d, band1 >= 1 & band1 <= 7)
 
+# create the breaks- and label vectors; see https://stackoverflow.com/a/33302968
+ewbrks <- seq(ymin,ymax,5)
+nsbrks <- seq(xmin,xmax,5)
+ewlbls <- unlist(lapply(ewbrks, function(x) ifelse(x < 0, paste(x, "°E"), ifelse(x > 0, paste(x, "°W"),x))))
+nslbls <- unlist(lapply(nsbrks, function(x) ifelse(x < 0, paste(x, "°S"), ifelse(x > 0, paste(x, "°N"),x))))
+
 # Create basemap
 g.b <- ggplot() + 
   geom_polygon(data = cnt, 
@@ -68,13 +80,18 @@ g.b <- ggplot() +
   #         x.min = 15, x.max = 22,
   #         y.min = -6.25, y.max = -5.25, 
   #         st.dist = .4, st.size = 4) +
+  scale_x_continuous("", 
+                     breaks = ewbrks, 
+                     labels = ewlbls) +
+  scale_y_continuous("", 
+                     breaks = nsbrks, 
+                     labels = nslbls) +
   coord_equal(xlim=c(7, 22),
               ylim=c(-7.5,7.5)) + 
   theme_few() + 
-  theme(
-    panel.background = element_rect(fill = "#dff1f9"),
-    plot.background = element_rect(color = NA, 
-                                   fill = NA)
+  theme(panel.background = element_rect(fill = "#dff1f9"),
+        plot.background = element_rect(color = NA, 
+                                       fill = NA)
   )
 
 # the minimap:
@@ -86,8 +103,8 @@ g2 <- ggplotGrob(
                aes(long, lat, group = group),
                size = 0.2, 
                fill = 'white', color = "black") + 
-  geom_rect(mapping = aes(xmin = 7, xmax = 22, 
-                          ymin = -7.5, ymax = 7.5), 
+  geom_rect(mapping = aes(xmin = 6.5, xmax = 22.5, 
+                          ymin = -8, ymax = 8), 
             alpha = 0.5, fill ="black", size = 0.5) + 
   coord_equal() + 
   scale_x_continuous(limits = c(-20, 55), expand = c(0, 0)) + 
@@ -98,31 +115,123 @@ g2 <- ggplotGrob(
 )
 ```
 
-
-
-
 ```{r}
 d <- read.csv("https://raw.githubusercontent.com/dirkseidensticker/aDRAC/master/data/aDRAC.csv", encoding = "UTF-8")
+
 # filter rough bounding box
-d <- filter(d, LAT < 10 & LAT > -10 & LONG > 5 & LONG < 22)
+d <- filter(d, LAT < xmax & 
+              LAT > xmin & 
+              LONG > ymin & 
+              LONG < ymax &
+              C14AGE >= 50 & 
+              C14AGE <= 3000 & 
+              is.na(REL))
+# REL != 0
+
+d$dummy <- 'maxAge'
+
+s <- dcast(d, SITE + LAT + LONG ~ dummy, 
+               value.var = "C14AGE", 
+               fun.aggregate = max)
+```
+
+### Paleoecology sites
+
+```{r}
+p <- read.csv("../data/base/Hubau2015sites.csv")
+```
 
 
-
+### Map with dated sites, age as fill
+```{r}
 g1 <- g.b + 
-  geom_point(data = d, 
-             aes(x = LONG, 
-                 y = LAT), 
-             shape = 21,
+  geom_point(data = s %>% arrange(maxAge), 
+             aes(x = LONG,
+                 y = LAT,
+                 fill = cut(maxAge, c(3001, 2750, 2500, 2250, 2000, 1000, 0))),
+             shape = 21, 
+             size = 2, 
+             color = 'grey',
+             stroke = .25) + 
+  scale_fill_viridis(option = "C", 
+                     direction = -1, 
+                     discrete = T,
+                     labels=c("AD 1000-1950",
+                              "BC/AD-AD 1000",
+                              "250 BC-BC/AD", 
+                              "500-250 BC", 
+                              "750-500 BC",
+                              "1000-750 BC", 
+                              "")) + 
+  geom_point(aes(x = 10.077778, 
+                 y = 5.8586611), 
+             shape = 23,
              size = 3, 
-             fill = "black",
-             color = "white")
+             fill = 'red', 
+             color = 'grey',
+             stroke = .25) + 
+  geom_point(data = p, 
+             aes(x = Longitude, 
+                 y = Latitude), 
+             shape = 18,
+             size = 2, 
+             color = 'black') + 
+  guides(fill = guide_legend(title="", 
+                             reverse = T,
+                             ncol = 2)) + 
+  theme(legend.position="top", 
+        legend.key = element_rect(colour = NA, fill = NA),
+        legend.background = element_rect(colour = NA, fill = NA))
 
 g3 <- g1 + 
   annotation_custom(grob = g2, 
                     xmin = 6, xmax = 10,
                     ymin = -8, ymax = -4)
 g3
-ggsave(g3, filename = "../img/FigArch.pdf", 
-       width = 6, height = 6)
+ggsave(g3, filename = "../img/FigArch-A_map.pdf", 
+       width = 6, height = 7)
 ```
 
+### OxCal
+
+```{r}
+library(oxcAAR)
+quickSetupOxcal()
+#setOxcalExecutablePath("OxCal")
+my_dates <- R_Date(d$LABNR, d$C14AGE, d$C14STD)
+my_sum <- oxcal_Sum(my_dates)
+
+write(my_sum, file = "../data/processed/Sum.txt")
+```
+
+> run in OxCal an Export "Raw data"
+
+```{r}
+sum <- read.table(file = "../data/processed/Sum.prior")
+
+p2 <- ggplot(sum, aes(x = V1, y = V2)) + 
+  geom_area(fill = '#666666') + 
+  scale_x_continuous("Age (cal BC/AD)", 
+                     limits = c(-1000, 1950), 
+                     breaks = seq(-1000, 1950, by = 250), 
+                     expand = c(0,0)) + 
+  scale_y_continuous("Prob. Density", 
+                     limits = c(0, 0.8), 
+                     expand = c(0,0)) + 
+  theme_few() +  
+  theme(panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        plot.background = element_rect(color = NA, 
+                                       fill = NA))
+p2
+```
+
+### Build comined figure
+
+```{r}
+p <- plot_grid(g3, p2, labels = "AUTO", ncol = 1, align = "v", rel_widths = c(1, 1), rel_heights = c(3, 1))
+ggsave("../img//FigArch.pdf", p, width = 5, height = 8)
+p
+```
