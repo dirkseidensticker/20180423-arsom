@@ -10,6 +10,7 @@ library(ggplot2)
 library(devtools)
 #install_github("oswaldosantos/ggsn")
 #library(ggsn)
+library(ggrepel)
 library(ggthemes)
 library(raster)
 library(reshape2)
@@ -123,8 +124,9 @@ d <- filter(d, LAT < xmax &
               LAT > xmin & 
               LONG > ymin & 
               LONG < ymax &
-              C14AGE >= 50 & 
+              C14AGE >= 15 & 
               C14AGE <= 3000 & 
+              C14STD < 200 &
               is.na(REL))
 # REL != 0
 
@@ -141,6 +143,17 @@ s <- dcast(d, SITE + LAT + LONG ~ dummy,
 p <- read.csv("../data/base/Hubau2015sites.csv")
 ```
 
+### Hubs from Linguistics (Bostoen et al. 2015: 359 Fig. 2)
+
+```{r}
+l <- read.csv("../data/base/Bostoen2015_359Fig2_BantuHubs.csv")
+```
+
+### Labels for archaeological Sites
+
+```{r}
+a.labs <- read.csv("../data/base/ArchSitesLabs.csv", encoding = "UTF-8")
+```
 
 ### Map with dated sites, age as fill
 ```{r}
@@ -148,7 +161,13 @@ g1 <- g.b +
   geom_point(data = s %>% arrange(maxAge), 
              aes(x = LONG,
                  y = LAT,
-                 fill = cut(maxAge, c(3001, 2750, 2500, 2250, 2000, 1000, 0))),
+                 fill = cut(maxAge, c(3001, 
+                                      2750, 
+                                      2500, 
+                                      2250, 
+                                      2000, 
+                                      1000, 
+                                      0))),
              shape = 21, 
              size = 2, 
              color = 'grey',
@@ -173,15 +192,51 @@ g1 <- g.b +
   geom_point(data = p, 
              aes(x = Longitude, 
                  y = Latitude), 
-             shape = 18,
-             size = 2, 
-             color = 'black') + 
-  guides(fill = guide_legend(title="", 
-                             reverse = T,
+             shape = 23,
+             size = 2,
+             color = 'black',
+             fill = 'white') +
+  geom_point(data = l, 
+             aes(x = long, 
+                 y = lat), 
+             shape = 22,
+             size = 7,
+             fill = 'lightgray',
+             color = 'white',
+             alpha = 0.75) +
+  geom_text(data = l, 
+            aes(x = long, 
+               y = lat, 
+               label = node), 
+            size = 4) + 
+  # geom_label_repel(data = a.labs, 
+  #                  aes(x = LONG,
+  #                      y = LAT,
+  #                      label = SITE),
+  #                  label.size = NA,
+  #                  label.padding = unit(.1, "lines"),
+  #                  size = 2,
+  #                  segment.color = 'black', 
+  #                  segment.size = .1,
+  #                  min.segment.length = unit(0, "lines")) + 
+  # geom_label_repel(data = p, 
+  #                  aes(x = Longitude,
+  #                      y = Latitude,
+  #                      label = Name),
+  #                  label.size = NA,
+  #                  label.padding = unit(.1, "lines"),
+  #                  size = 2,
+  #                  segment.color = 'black',
+  #                  segment.size = .1,
+  #                  min.segment.length = unit(0, "lines"),
+  #                  fill = "grey30",
+  #                  colour = "white", 
+  #                  fontface = "bold") + 
+  guides(fill = guide_legend(reverse = T,
                              ncol = 2)) + 
-  theme(legend.position="top", 
-        legend.key = element_rect(colour = NA, fill = NA),
-        legend.background = element_rect(colour = NA, fill = NA))
+  theme(legend.title = element_blank(), 
+        legend.justification = c(1, 1), 
+        legend.position = c(.995, .995))
 
 g3 <- g1 + 
   annotation_custom(grob = g2, 
@@ -189,13 +244,13 @@ g3 <- g1 +
                     ymin = -8, ymax = -4)
 g3
 ggsave(g3, filename = "../img/FigArch-A_map.pdf", 
-       width = 6, height = 7)
+       width = 8, height = 8)
 ```
 
 ### OxCal
 
 ```{r}
-library(oxcAAR)
+  library(oxcAAR)
 quickSetupOxcal()
 #setOxcalExecutablePath("OxCal")
 my_dates <- R_Date(d$LABNR, d$C14AGE, d$C14STD)
@@ -231,7 +286,7 @@ p2
 ### Build comined figure
 
 ```{r}
-p <- plot_grid(g3, p2, labels = "AUTO", ncol = 1, align = "v", rel_widths = c(1, 1), rel_heights = c(3, 1))
-ggsave("../img//FigArch.pdf", p, width = 5, height = 8)
-p
+p0 <- plot_grid(g3, p2, labels = "AUTO", ncol = 1, align = "v", rel_widths = c(1, 1), rel_heights = c(3, 1))
+ggsave("../img//FigArch.pdf", p0, width = 5, height = 8)
+p0
 ```

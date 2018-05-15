@@ -7,12 +7,16 @@
 \usepackage{graphicx}
 \usepackage{ulem}
 
-\definecolor{BoxCol}{RGB}{229,229,229}
-\definecolor{HeadCol}{RGB}{30,100,200}
+\usepackage{xcolor}
+\definecolor{BoxCol}{HTML}{E5E5E5}
+\definecolor{InfoBoxCol}{HTML}{F1A42B}
+\definecolor{HeadCol}{HTML}{1E64C8}
 
 \usepackage{multicol}
 \setlength{\columnseprule}{0pt}
 \setlength{\columnsep}{1.75cm}
+
+\usepackage{qrcode}
 
 \begin{document}
 \vspace*{-2cm}\hspace*{-2cm}\includegraphics[width = 14.47cm, height = 6.2cm]{img/logos/icon_UGent_LW_EN_RGB_2400_color.png}
@@ -23,76 +27,60 @@
 \vspace{2cm}\hspace{2cm}\begin{minipage}[t]{77cm}
 {\fontsize{50}{52}\selectfont\textcolor{HeadCol}{\uppercase{BantUGent - UGent Centre for Bantu Studies}}}
 \bigbreak\bigbreak
-{\fontsize{40}{44}\selectfont{\textbf{Dirk Seidensticker, Bernard Clist, Wannes Hubau, Hans Beeckman, Koen Bostoen, Sara Pacchiarotti}}}
+{\fontsize{40}{44}\selectfont{\textbf{Dirk Seidensticker\textsuperscript{1}, Bernard Clist\textsuperscript{1}, Wannes Hubau\textsuperscript{2}, Hans Beeckman\textsuperscript{2}, Sara Pacchiarotti\textsuperscript{1}, and Koen Bostoen\textsuperscript{1}}}}
 \bigbreak\bigbreak
 {\fontsize{44}{50}\selectfont\textcolor{HeadCol}{\uline{\textbf{\uppercase{The Late Holocene Settlement History of the Central African Rainforest:}}}}}
 \bigbreak
-{\fontsize{44}{50}\selectfont\textcolor{HeadCol}{\uline{\textbf{\uppercase{Archaeological, Palaeoenvironental and Linguistic Evidence for 3,000 years of}}}}}
+{\fontsize{44}{50}\selectfont\textcolor{HeadCol}{\uline{\textbf{\uppercase{Archaeological, Palaeoenvironmental and Linguistic Evidence for 3,000 years of}}}}}
 \bigbreak
 {\fontsize{44}{50}\selectfont\textcolor{HeadCol}{\uline{\textbf{\uppercase{Interaction between Bantu Speech Communities and their Changing Environments}}}}}
 \end{minipage}
 
 \vspace{2cm}\hspace{2cm}\begin{minipage}[t]{77cm} %24.5cm
-{\fontsize{28}{36} \selectfont During the past forty years, archaeology in the Central African rainforest has made a significant contribution to our understanding of the settlement history of one of Africa's major biotopes. Taking into account the massive extent of this biotope, the promising results of past research, which filled the blank spot that the rainforest presented on any archaeological distribution map of Africa until the 1970s, can only be seen as starting points. Our poster aims at reviewing our current knowledge on the settlement history of the Central African rainforest as it has been documented through surveys and excavations as well as through the late Holocene paleo-environmental record between present-day Cameroon and Angola.}
-\bigbreak
-{\fontsize{28}{36} \selectfont The earliest traces of sedentary and potentially food producing peopling, mainly identified through pottery finds, date into the first millennium BC and are commonly seen in relation to a contemporaneous crisis of the rainforest and to the expansion of Bantu languages and their speech communities.}
+{\fontsize{28}{36} \selectfont During the past forty years, archaeological, palaeoenvironmental and linguistic research in the Central African rainforest have made a significant contribution to our understanding of the settlement history of one of Africa's major biotopes. Taking into account the massive extent of this biotope, the promising results of past research, which filled the blank spot that the rainforest represented on any archaeological distribution map of Africa until the 1970s, can only be seen as starting points. Our poster aims at reviewing our current state of knowledge on the settlement history of the Central African rainforest as documented within surveys and excavations as well as through the late Holocene palaeoenvironmental record between present-day Cameroon and Angola. The earliest traces of sedentary and potentially food producing people, mainly identified through pottery finds, date back to the first millennium BC and are commonly seen in relation to a contemporaneous crisis of the rainforest and to the expansion of Bantu languages.}
 \end{minipage}
 
-\vspace{2cm}
+\vspace{1cm}
 \hspace{2cm}\begin{minipage}[t]{77cm}
 \begin{multicols}{3}
 
 {\fontsize{38}{42} \selectfont \textcolor{HeadCol}{Archaeology}}
 \bigbreak
-{\fontsize{28}{36} \selectfont The archaeological record of Central Africa must be divided into two blocks of research (Fig. 1). The western or coastal area, characterized by a diverse history of research, and the Congo Basin, whose archaeological record goes back to the River Reconnaissance Project led by Manfred Eggert. The latter derived a remarkably coherent dataset covering the last two and a half millennia.}
+{\fontsize{28}{36} \selectfont In the putative Bantu homeland in the Cameroonian Grassfields, archaeological research has shown that pottery of a specific style coexisted with a macrolithic toolkit from around 7,000~BP until 4,000~BP. A new and distinctive kind of pottery, similar to the earlier Grassfields ones and associated with the region now covered by rainforest, develops only after 3,000~BP in southern Cameroon. The spread of these early groups further south show a general north to south chronological gradient reaching the Inner Congo Basin and the Lower Congo around 2,400--2,300~BP. Metallurgy is rare then but becomes more abundant after 2,000~BP.}
+\includegraphics[width = \linewidth]{img/FigArch-A_map.pdf}
+{\fontsize{22}{0} \selectfont \textit{\textbf{Fig.~1}\hspace{1em}Mapping of dated archaeological sites from the last 3000 years. White diamonds: Palaeoenvironmental sites (see \textbf{Fig. 2}). Numbers: Successive hubs of Bantu language dispersal (see \textbf{Fig. 3}).}}
 \bigbreak
-\includegraphics[width = \linewidth]{img/FigArch.pdf}
-{\fontsize{28}{36} \selectfont \textit{\textbf{Fig.~1}\hspace{1em}Mapping of dated archaeological sites from the last 3000 years (\textbf{A}) and summed probability curve for the radicarbon dates (\textbf{B}). Red square: Shum Laka; Black aquares: Paleoecological sites (\textbf{Fig. 2}).}}
+{\fontsize{28}{36} \selectfont Empirical evidence of past subsistence is rare. Isolated finds associated with the earliest traces of pottery producing groups indicate a mixed system consisting of hunting, collecting, fishing, small stock raising, and horticulture. The questions of what constituted the subsistence base of those early sedentary groups and if this was a package carried into the forests, or developed as successive adaptations is still debated.}
 \bigbreak
-{\fontsize{28}{36} \selectfont Results from the Congo Basin indicate a diverse, non-uniform settlement history. A site activity curve (Fig. 2 A) indicates lesser amount of settled sites within the Early Iron Age (400 BC–AD 600), followed by a Middle Iron Age recess and a twin-peaked Late Iron Age (from AD 1100).1 The group dispersion calibration of 684 late Holocene radiocarbon dates from the Central African rainforest (Fig. 2 B) illustrates both a diverse settlement history and a research bias, focussing on the Early Iron Age.}
-\bigbreak
-{\fontsize{28}{36} \selectfont Recent studies in the north-eastern parts of the Congo Basin show a distinct change in technological as well as stylistic attributes of the pottery that might be associated with a possible demographic change (Livingstone-Smith et al. 2017). Similar changes have been observed along the Sangha river and are dated towards the 13th c. AD (Seidensticker in Prep.).}
+{\fontsize{28}{36} \selectfont A comparison of the archaeological record of the western/coastal area, characterized by a diverse history of research, and the Congo Basin, whose archaeological record goes back to the River Reconnaissance Project (1977--1987), indicates separate migration axes. The oldest evidence for pottery-producing settlers north and south of the Congo mouth, within the present-day confines of the so-called \textit{West-Coastal} Bantu languages (\textbf{Fig. 3}), date between 2,700--2,350~BP (Loango coast) and 2,300--2,000 BP (Lower Congo) respectively. Changes in pottery styles and technology along the Atlantic as well as the tributaries of the Congo River are probably indicative of multiple small-scale immigration movements.}
 \vfill\null
 \columnbreak
-{\fontsize{38}{42} \selectfont \textcolor{HeadCol}{Paleoecology}}
+{\fontsize{38}{42} \selectfont \textcolor{HeadCol}{Palaeoecology}}
 \bigbreak
-{\fontsize{28}{36} \selectfont Bantu-speaking peoples started migrating south from their cradle of the Cameroon Grassfields probably some 4000 years ago. Paleo-botanical evidence showed that climatic anomalies had an impact on Central African vegetation. Intense droughts are thought to leave the forest structure severely fragmented. This particularly happened during the third millennium BP rainforest crisis (3000-2000 BP). The period is characterized by increasing sea surface temperatures (SST) near the Congo River mouth. Peaks in SST are associated with drought periods on the Central African continent. During these periods, contiguous forest areas were turned into mosaics of forest and savanna patches possibly easing the movement of villagers southwards.}
+{\fontsize{28}{36} \selectfont Palaeoenvironmental evidence shows that climatic anomalies had an impact on Central African vegetation. Intense droughts are thought to have left the forest structure severely fragmented. This happened especially during the third millennium BP rainforest crisis (3,000--2,000 BP). The period is characterized by increasing sea surface temperatures (SST) near the Congo River mouth. Peaks in SST are associated with drought periods on the Central African continent. During these periods, contiguous forest areas were turned into mosaics of forest and savanna patches.}
 \bigbreak
-\includegraphics[width = \linewidth, height = \linewidth]{example-image-a}
+\colorbox{white}{\includegraphics[width = \linewidth, height=1.1\linewidth]{img/"Hubau et al 2015 GCB timeline".pdf}}
 \bigbreak
-{\fontsize{28}{36} \selectfont \textit{\textbf{Fig.~2}\hspace{1em}Identification of radiocarbon dated charcoal fragments showed that pioneer and woodland savanna taxa are dominant in charcoal assemblages that were formed centuries after the actual disturbance periods (indicated as gray areas).This suggests that forest regeneration after the intense drought periods may have been a slow process, hampered by recurring fire events. Open savanna patches remained fire-prone even after the drought anomalies, and savanna fires may have impacted nearby forest edges and hampered forest encroachment. (Source: Hubau et al. 2015).}}
+{\fontsize{22}{0} \selectfont \textit{\textbf{Fig.~2}\hspace{1em}Charcoal identification results from 6 pits excavated in the Mayumbe rainforest (see \textbf{Fig.~1}). Each box represents a pit and each colored histogram a charcoal assemblage formed during a fire event. The classification represents ecological preferences of the identified taxa. Identification of radiocarbon dated charcoal fragments shows that pioneer (light green) and woodland savanna taxa (brown) were sometimes still dominant in charcoal assemblages that were formed centuries after the actual disturbance periods (gray areas). This suggests that forest regeneration after intense drought periods may have been a slow process, hampered by recurring fire events. Open savanna patches remained fire-prone even after the drought anomalies, and savanna fires may have impacted nearby forest edges and hampered forest encroachment (Source: Hubau et al. 2015).}}
 \bigbreak
-{\fontsize{28}{36} \selectfont Although climate-driven forest disturbance certainly occurred during drought periods throughout the Holocene, migrating Bantu speaking villagers may have enhanced locally the process of forest destruction by applying slash-and burn techniques in rainforest areas. However, while human impact was probably an important factor during the last millennium, it is still unclear how significant their role was during the 3rd millennium rainforest crisis.}
-
+{\fontsize{28}{36} \selectfont Although climate-driven forest disturbance certainly occurred during drought periods throughout the Holocene, migrating Bantu speaking villagers may have locally reinforced the process of forest destruction by applying slash-and burn techniques in rainforest areas. However, human impact was probably more important during the last millennium. It is still unclear how significant anthropogenic factors were during the third millennium BP rainforest crisis.}
 \vfill\null
 \columnbreak
 {\fontsize{38}{42} \selectfont \textcolor{HeadCol}{Linguistics}}
 \bigbreak
-{\fontsize{28}{36} \selectfont Recent lexicon-based phylogenetic studies show that two parallel Bantu subclades, Congo Bantu (CB) and West-Coastal Bantu (WCB), split off of their ancestor clade North-Western Bantu (NWB) possibly around date xx?. Their pre-split off homeland was probably somewhere in the current border region between Cameroon, Gabon, the Congos and the CAR (in the middle of the Sangha River Interval, SRI).}
+{\fontsize{28}{36} \selectfont Within the Bantu area, the North-West, more specifically Cameroon and northern Gabon, is linguistically the most heterogeneous. This high linguistic diversity suggests that the earliest phases of the Bantu Expansion were characterized by slow and small-scale language dispersal. The rest of the Bantu area is occupied by four major branches, which emerged after the initial diversification. Three of them consist of languages spoken in the western half of the Bantu domain: (1) \textit{Central-Western}/\textit{North Zaire}/\textit{Congo}, (2) \textit{West-Coastal}/\textit{West-Western} and (3) \textit{South-Western}. All Bantu languages spoken in Eastern and South-Eastern Africa belong to a single \textit{Eastern} branch.}
 \bigbreak
+\includegraphics[width = \linewidth, height=1.125\linewidth]{img/fg3_online.jpeg}
 \bigbreak
-\includegraphics[width = \linewidth, height = .45\linewidth]{example-image-b}
+{\fontsize{22}{0} \selectfont \textit{\textbf{Fig.~3}\hspace{1em}Simplified Bayesian consensus tree of 168 Bantu languages. Numbers on the tree correspond to successive hubs of Bantu language dispersal (see \textbf{Fig.~1}; Source: Bostoen et al. 2015).}}
 \bigbreak
-{\fontsize{28}{36} \selectfont \textit{\textbf{Fig.~3}\hspace{1em}INSERT RELEVANT PORTION OF TREE FIGURE HERE?}}
-\bigbreak
-{\fontsize{28}{36} \selectfont The first Central African forest crisis resulting in savannah extension on its periphery around 4000 BP likely facilitated the slow pace migration of the ancestors of NWB speakers from their homeland in the Cameroonian Grassfields southwards into the Sanaga-Mbam confluence area, a fact also confirmed by archaeological evidence.}
-\bigbreak
-{\fontsize{28}{36} \selectfont On the other hand, the second Central African forest crisis, which perturbed its core around 2500 BP and caused a reopening of the Sangha River Interval (SRI), boosted rapid and large-scale longitudinal expansions of the ancestors of CB and WCB speakers from their homeland in the midst of the SRI. The corridor created by the reopening of the SRI favored the rapid southward expansion of WCB speakers into the area straddling the Batéké Plateau and the Bandundu region (DRC), as well as the eastward expansion of CB speakers toward the Congo-Ubangi confluence area.}
-\bigbreak
-\bigbreak
-\includegraphics[width = \linewidth, height = .45\linewidth]{example-image-c}
-\bigbreak
-{\fontsize{28}{36} \selectfont \textit{\textbf{Fig.~4}\hspace{1em}INSERT A MODIFIED VERSION OF FIG. 2 IN 2015 PAPER HERE?}}
-\bigbreak
-{\fontsize{28}{36} \selectfont However, the tentative WCB homeland somewhere close to the Batéké Plateau, resulting from ancestral speakers fastly moving southwards around 2500 BP, is at odds with Tchissanga pottery found on the Congolese Atlantic coast dating 2500-2200 PB, the oldest tradition within present-day borders of WCB. This paradox might have two explanations: either older ceramic traditions will be found in the archaeologically unexplored Batéké Plateau area, or coastal Tchissanga pottery producers spoke a non-WCB language(s).}
-
-\vfill
-
+{\fontsize{28}{36} \selectfont Grollemund et al. 2015 and de Schryver et al. (2015) show that \textit{West-Coastal} Bantu is composed of three distinct subclades: the \textit{Kikongo Language Cluster} (KLC), the \textit{Yanzi} languages and the \textit{Nzebi-Mbete-Teke} languages. The putative homeland of these three subgroups would be situated somewhere in between the Bateke Plateau and the Bandundu region of Congo DRC (2--4$^\circ$S/14--17$^\circ$E) and would not have emerged before ca. 2,500 BP. While the ancestors of \textit{Nzebi-Mbete-Teke} languages remained relatively close to the putative \textit{West-Coastal} homeland, the ancestors of Yanzi speakers must have moved east of the Congo River and KLC speakers must have moved towards the Atlantic Ocean instead. Following Grollemund et al. (2015), the KLC subclade did not start its dispersal towards the coast before ca. 1,800 BP and did not reach it before ca. 1,500 BP.}
+\vfill\null
 \end{multicols}
 \end{minipage}
+\raisebox{1cm}{\vspace{1.5cm}\hspace{1.5cm}\colorbox{InfoBoxCol}{\hspace{.5cm}\begin{minipage}[t]{50.75cm}\vspace{.5cm} {\fontsize{28}{36} \selectfont Scholars increasingly agree that a climate-induced destruction of the rainforest around 2500 years ago would have given a strong impetus to the Bantu Expansion through West-Central Africa. The inland location of the \textit{West-Coastal} Bantu homeland north of the current-day capitals of Kinshasa and Brazzaville (Bostoen et al. 2015, de Schryver et al. 2015, Grollemund et al. 2015) is at odds with archaeological evidence suggesting that the oldest settlements within the present-day confines of \textit{West-Coastal} Bantu are found along the Atlantic coast and date between 2,700--2,000 BP. This is difficult to reconcile however with the tentative date for the arrival of ancestral Kikongo (KLC) speakers in the Lower Congo region, which is according to Grollemund et al. (2015) only around 1,500 BP. Much needed archaeological fieldwork will have to deliver empirical evidence to better understand the arrival of Bantu speakers south of the Central African rainforest.\vspace{.5cm}}\end{minipage}\hspace{.5cm}}\hspace{.5cm}\colorbox{HeadCol}{\hspace{.5cm}\begin{minipage}[t]{24.5cm}\vspace{.1cm}\textcolor{white}{\centering {\fontsize{28}{36} \selectfont \textbf{ \smallbreak Climates and Cultures: Perspectives for the Future} \\ 23--24 May 2018 \\ Palace of the Academies -- Brussels \\ \vspace{1.35cm} \hspace{.5cm}\begin{minipage}[c]{.8\textwidth}\begin{flushleft} \textbf{Contact: Dirk.Seidensticker@UGent.be} \\ \bigbreak {\small 1 \hspace{.25em} UGent, BantuFirst project www.bantufirst.ugent.be \\ 2 \hspace{.25em} RMCA Tervuren, Wood Biology Lab} \end{flushleft}\end{minipage}\begin{minipage}[c]{.2\textwidth} \centering\colorbox{white}{\textcolor{black}{\qrcode[height=4cm]{http://www.bantufirst.ugent.be/}}}\end{minipage}}\vspace{.65cm}}\end{minipage}\hspace{.5cm}}}
 \end{minipage}}
-
-\hspace*{-2cm}\includegraphics[width = 10.51cm, height = 8.41cm]{img/logos/logo_UGent_EN_RGB_2400_color.png}
+\hspace*{-2cm}\includegraphics[width = 10.51cm, height = 8.41cm]{img/logos/logo_UGent_EN_RGB_2400_color.png} \raisebox{0.4\height}{\hspace*{2cm}\includegraphics[width = 7.05cm, height = 4.7cm]{img/logos/logo_tervuren_horizontaal.jpg}}
 %\begin{tabular}{cccc}
 % & \includegraphics[width = 7.05cm, height = 4.7cm]{logos/logo_tervuren_horizontaal.jpg} & International Conference Climates and Cultures: Perspectives for the Future & 23-24 May 2018
 %\end{tabular}  
