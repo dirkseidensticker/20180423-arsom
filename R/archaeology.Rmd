@@ -127,7 +127,8 @@ d <- filter(d, LAT < xmax &
               C14AGE >= 15 & 
               C14AGE <= 3000 & 
               C14STD < 200 &
-              is.na(REL))
+              PHASE != "LSA" &
+              ((REL != 0) | (is.na(d$REL))))
 # REL != 0
 
 d$dummy <- 'maxAge'
@@ -169,7 +170,7 @@ g1 <- g.b +
                                       1000, 
                                       0))),
              shape = 21, 
-             size = 2, 
+             size = 3, 
              color = 'grey',
              stroke = .25) + 
   scale_fill_viridis(option = "C", 
@@ -193,7 +194,7 @@ g1 <- g.b +
              aes(x = Longitude, 
                  y = Latitude), 
              shape = 23,
-             size = 2,
+             size = 3,
              color = 'black',
              fill = 'white') +
   geom_point(data = l, 
